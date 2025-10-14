@@ -11,23 +11,48 @@ import numpy as np
 import time
 from collections import deque
 
+# Try to import config, fall back to defaults if not available
+try:
+    from config import *
+except ImportError:
+    # Default configuration
+    MIN_DETECTION_CONFIDENCE = 0.7
+    MIN_TRACKING_CONFIDENCE = 0.5
+    MAX_NUM_HANDS = 2
+    DETECTION_THRESHOLD = 5
+    HISTORY_LENGTH = 10
+    MEME_DURATION = 5.0
+    MIN_MEMES = 5
+    MAX_MEMES = 50
+    MEME_GROWTH_RATE = 10
+    OVERLAY_ALPHA = 0.7
+    PULSE_SPEED = 3
+    MEME_TEXTS = ["6 7", "67", "🔥 6 7 🔥", "SIX SEVEN", "6️⃣7️⃣"]
+    CAMERA_INDEX = 0
+    FLIP_CAMERA = True
+    WINDOW_NAME = "6-7 Meme Detector"
+    STATUS_COLOR_READY = (0, 255, 0)
+    STATUS_COLOR_ACTIVE = (0, 0, 255)
+    FINGER_COUNT_COLOR = (0, 255, 0)
+    CENTER_TEXT_COLOR = (0, 255, 255)
+
 class SixSevenDetector:
     def __init__(self):
         # Initialize MediaPipe Hands
         self.mp_hands = mp.solutions.hands
         self.hands = self.mp_hands.Hands(
             static_image_mode=False,
-            max_num_hands=2,
-            min_detection_confidence=0.7,
-            min_tracking_confidence=0.5
+            max_num_hands=MAX_NUM_HANDS,
+            min_detection_confidence=MIN_DETECTION_CONFIDENCE,
+            min_tracking_confidence=MIN_TRACKING_CONFIDENCE
         )
         self.mp_draw = mp.solutions.drawing_utils
         
         # State tracking
-        self.detection_history = deque(maxlen=10)
+        self.detection_history = deque(maxlen=HISTORY_LENGTH)
         self.meme_mode = False
         self.meme_start_time = 0
-        self.meme_duration = 5  # Show memes for 5 seconds
+        self.meme_duration = MEME_DURATION
         
     def count_fingers(self, hand_landmarks, handedness):
         """
@@ -119,7 +144,7 @@ class SixSevenDetector:
         
         # Calculate how many memes to show based on time
         elapsed = time.time() - self.meme_start_time
-        num_memes = min(int(elapsed * 10) + 5, 50)
+        num_memes = min(int(elapsed * MEME_GROWTH_RATE) + MIN_MEMES, MAX_MEMES)
         
         for i in range(num_memes):
             # Random position
@@ -137,8 +162,7 @@ class SixSevenDetector:
             )
             
             # Draw "6 7" or "67" randomly
-            texts = ["6 7", "67", "🔥 6 7 🔥", "SIX SEVEN", "6️⃣7️⃣"]
-            text = np.random.choice(texts)
+            text = np.random.choice(MEME_TEXTS)
             
             thickness = int(scale * 2)
             cv2.putText(overlay, text, (x, y), font, scale, color, thickness)
@@ -150,15 +174,14 @@ class SixSevenDetector:
         text_y = (h + text_size[1]) // 2
         
         # Pulsating effect
-        pulse = abs(np.sin(elapsed * 3)) * 0.3 + 0.7
+        pulse = abs(np.sin(elapsed * PULSE_SPEED)) * 0.3 + 0.7
         pulse_scale = 2 * pulse
         
         cv2.putText(overlay, center_text, (text_x, text_y), font, 
-                   pulse_scale, (0, 255, 255), 6)
+                   pulse_scale, CENTER_TEXT_COLOR, 6)
         
         # Blend with original frame
-        alpha = 0.7
-        frame = cv2.addWeighted(overlay, alpha, frame, 1 - alpha, 0)
+        frame = cv2.addWeighted(overlay, OVERLAY_ALPHA, frame, 1 - OVERLAY_ALPHA, 0)
         
         return frame
     
@@ -166,15 +189,24 @@ class SixSevenDetector:
         """
         Main loop for the detector
         """
-        cap = cv2.VideoCapture(0)
+        # Show banner
+        try:
+            from banner import print_banner
+            print_banner()
+        except:
+            print("=" * 60)
+            print("6-7 Meme Detector Started!")
+            print("=" * 60)
+        
+        cap = cv2.VideoCapture(CAMERA_INDEX)
         
         if not cap.isOpened():
             print("Error: Could not open camera")
             return
         
-        print("6-7 Meme Detector Started!")
         print("Show 6 or 7 fingers to trigger the meme flood!")
         print("Press 'q' to quit")
+        print()
         
         while True:
             ret, frame = cap.read()
@@ -183,7 +215,8 @@ class SixSevenDetector:
                 break
             
             # Flip frame horizontally for mirror effect
-            frame = cv2.flip(frame, 1)
+            if FLIP_CAMERA:
+                frame = cv2.flip(frame, 1)
             
             # Convert to RGB for MediaPipe
             rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -198,7 +231,7 @@ class SixSevenDetector:
             self.detection_history.append(detected)
             
             # Trigger meme mode if detected consistently
-            if sum(self.detection_history) >= 5 and not self.meme_mode:
+            if sum(self.detection_history) >= DETECTION_THRESHOLD and not self.meme_mode:
                 self.meme_mode = True
                 self.meme_start_time = time.time()
                 print("🔥 6-7 DETECTED! MEME MODE ACTIVATED! 🔥")
@@ -221,7 +254,7 @@ class SixSevenDetector:
                 for i, count in enumerate(finger_counts):
                     text = f"Hand {i+1}: {count} fingers"
                     cv2.putText(frame, text, (10, y_offset), 
-                               cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+                               cv2.FONT_HERSHEY_SIMPLEX, 0.7, FINGER_COUNT_COLOR, 2)
                     y_offset += 30
             
             # Apply meme overlay if in meme mode
@@ -230,12 +263,12 @@ class SixSevenDetector:
             
             # Display detection status
             status_text = "MEME MODE!" if self.meme_mode else "Ready to detect 6-7..."
-            status_color = (0, 0, 255) if self.meme_mode else (0, 255, 0)
+            status_color = STATUS_COLOR_ACTIVE if self.meme_mode else STATUS_COLOR_READY
             cv2.putText(frame, status_text, (10, frame.shape[0] - 20),
                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, status_color, 2)
             
             # Show frame
-            cv2.imshow('6-7 Meme Detector', frame)
+            cv2.imshow(WINDOW_NAME, frame)
             
             # Check for quit
             if cv2.waitKey(1) & 0xFF == ord('q'):

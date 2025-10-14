@@ -92,23 +92,37 @@ When 6 or 7 fingers are detected consistently across multiple frames, "meme mode
 
 ## 🎨 Customization
 
-Edit `detector.py` to customize:
+### Easy Customization (Recommended)
+
+Edit `config.py` to customize without touching the main code:
 
 ```python
-# Meme duration (line ~25)
-self.meme_duration = 5  # seconds
+# Detection sensitivity
+MIN_DETECTION_CONFIDENCE = 0.7  # Lower = easier detection
 
-# Detection sensitivity (line ~18)
-min_detection_confidence=0.7  # 0.0 to 1.0
+# Trigger threshold
+DETECTION_THRESHOLD = 5  # Frames needed to activate
 
-# Number of memes (line ~125)
-num_memes = min(int(elapsed * 10) + 5, 50)
+# Meme display
+MEME_DURATION = 5.0  # Seconds
+MAX_MEMES = 50  # Maximum meme texts
 
-# Meme texts (line ~137)
-texts = ["6 7", "67", "🔥 6 7 🔥", "SIX SEVEN", "6️⃣7️⃣"]
+# Custom meme texts
+MEME_TEXTS = [
+    "6 7",
+    "67",
+    "YOUR CUSTOM TEXT HERE"
+]
+```
 
-# Detection threshold (line ~213)
-sum(self.detection_history) >= 5  # frames needed to trigger
+### Advanced Customization
+
+For more control, edit `detector.py` directly:
+
+```python
+# Finger counting algorithm (count_fingers method)
+# Detection logic (detect_six_seven method)  
+# Meme animation (create_meme_overlay method)
 ```
 
 ## 🛠️ Troubleshooting
@@ -146,6 +160,8 @@ This will:
 ```
 67/
 ├── detector.py         # Main application
+├── config.py          # Configuration file (easy customization!)
+├── banner.py          # ASCII art banner
 ├── requirements.txt    # Python dependencies
 ├── test_detector.py    # Test suite
 ├── start.sh           # Quick start (Linux/macOS)
