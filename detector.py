@@ -127,6 +127,9 @@ class SixSevenDetector:
             total = sum(finger_counts)
             if total == 13 or total == 12:  # 6+7 or similar combinations
                 detected = True
+            # Check for 6-6 gesture (both hands showing 3 fingers each)
+            if sorted(finger_counts) == [3, 3]:
+                detected = True
         
         return detected, finger_counts
     
