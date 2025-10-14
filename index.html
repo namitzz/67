@@ -405,6 +405,10 @@
                         if (total === 6 || total === 7 || total === 12 || total === 13) {
                             detected = true;
                         }
+                        // Check for 6-6 gesture (both hands showing 3 fingers each)
+                        if (fingerCounts[0] === 3 && fingerCounts[1] === 3) {
+                            detected = true;
+                        }
                     }
 
                     // Display finger counts
