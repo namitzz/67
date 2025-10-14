@@ -17,7 +17,15 @@ A real-time gesture detector that uses your camera to detect the "6 7" gesture (
 
 ## 🚀 Quick Start
 
-### Linux/macOS
+### 🌐 Try it Online (Web Version)
+
+**[Launch Web App](https://namitzz.github.io/67/)** - No installation needed! Works in your browser.
+
+The web version uses JavaScript and MediaPipe Web to run entirely in your browser. Just click the link, allow camera access, and start detecting!
+
+### 💻 Desktop Version (Python)
+
+#### Linux/macOS
 ```bash
 git clone https://github.com/namitzz/67.git
 cd 67
@@ -159,7 +167,8 @@ This will:
 
 ```
 67/
-├── detector.py         # Main application
+├── index.html          # Web version (GitHub Pages)
+├── detector.py         # Desktop application (Python)
 ├── config.py          # Configuration file (easy customization!)
 ├── banner.py          # ASCII art banner
 ├── requirements.txt    # Python dependencies
@@ -169,8 +178,26 @@ This will:
 ├── README.md          # This file
 ├── DEMO.md            # Visual walkthrough
 ├── FAQ.md             # FAQs and troubleshooting
-└── .gitignore         # Git ignore rules
+├── .gitignore         # Git ignore rules
+└── .github/
+    └── workflows/
+        └── pages.yml  # GitHub Pages deployment
 ```
+
+## 🌐 Deployment
+
+### GitHub Pages (Web Version)
+
+The web version is automatically deployed to GitHub Pages when changes are pushed to the main branch. It uses:
+- **MediaPipe Hands Web** for hand detection in the browser
+- **JavaScript** for real-time processing
+- **Browser Camera API** (getUserMedia) for camera access
+
+Access it at: **https://namitzz.github.io/67/**
+
+### Desktop Version
+
+For the full Python experience with more customization options, clone the repository and run locally as described in the Quick Start section.
 
 ## 🤝 Contributing
 
