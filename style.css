@@ -1,0 +1,159 @@
+:root { 
+  --gap: 12px; 
+  --radius: 16px; 
+  --bg:#0b0b0e; 
+  --panel:#14141a; 
+  --text:#eaeaea; 
+  --muted:#9aa0a6; 
+}
+
+* { 
+  box-sizing: border-box; 
+}
+
+body { 
+  margin:0; 
+  background:var(--bg); 
+  color:var(--text); 
+  font: 15px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; 
+}
+
+header { 
+  padding:16px; 
+  text-align:center; 
+  font-weight:700; 
+}
+
+main { 
+  max-width: 980px; 
+  margin: 0 auto; 
+  padding: var(--gap); 
+  display: grid; 
+  gap: var(--gap); 
+}
+
+.stage { 
+  position: relative; 
+  background: #111; 
+  border-radius: var(--radius); 
+  overflow: hidden; 
+  aspect-ratio: 16 / 9; 
+}
+
+video, canvas { 
+  position:absolute; 
+  inset:0; 
+  width:100%; 
+  height:100%; 
+  object-fit: cover; 
+}
+
+.overlay { 
+  position:absolute; 
+  inset:0; 
+  pointer-events:none; 
+}
+
+.controls { 
+  display:flex; 
+  gap: var(--gap); 
+  flex-wrap: wrap; 
+  justify-content: center; 
+  padding: var(--gap); 
+  background: var(--panel); 
+  border-radius: var(--radius); 
+}
+
+button, input[type="range"], label, select { 
+  font: inherit; 
+}
+
+button { 
+  padding:10px 14px; 
+  border-radius: 999px; 
+  border:1px solid #333; 
+  background:#1c1c22; 
+  color:#fff; 
+  cursor:pointer; 
+}
+
+button:disabled { 
+  opacity:.5; 
+  cursor:not-allowed; 
+}
+
+.row { 
+  display:flex; 
+  align-items:center; 
+  gap:10px; 
+  flex-wrap:wrap; 
+}
+
+.spacer { 
+  flex:1; 
+}
+
+.msg { 
+  text-align:center; 
+  min-height:1.4em; 
+  color: var(--muted); 
+}
+
+.badge { 
+  display:inline-block; 
+  padding:4px 8px; 
+  border-radius:6px; 
+  background:#1f2937; 
+  font-size:12px; 
+  margin-left:8px; 
+  color:#cbd5e1; 
+}
+
+/* Burst effects */
+.shake { 
+  animation: shake 90ms linear infinite; 
+}
+
+@keyframes shake { 
+  0% { transform: translate(1px, 1px) rotate(0deg);} 
+  20% {transform: translate(-2px, 0) rotate(-0.5deg);} 
+  40% {transform: translate(2px, -1px) rotate(0.5deg);} 
+  60% {transform: translate(-1px, 2px) rotate(0deg);} 
+  80% {transform: translate(1px, -2px) rotate(0.5deg);} 
+  100% {transform: translate(0, 0) rotate(0);} 
+}
+
+.zoom { 
+  animation: zoom 220ms ease-in-out infinite alternate; 
+}
+
+@keyframes zoom { 
+  from { transform: scale(1.02); } 
+  to { transform: scale(1.08); } 
+}
+
+.flash { 
+  position:absolute; 
+  inset:0; 
+  background: white; 
+  opacity: 0; 
+  pointer-events:none; 
+}
+
+.flash.on { 
+  animation: flash 220ms ease-in-out 5; 
+}
+
+@keyframes flash { 
+  0% { opacity: 0; } 
+  50% { opacity: 0.25; } 
+  100% { opacity: 0; } 
+}
+
+.spray { 
+  position:absolute; 
+  font-weight: 900; 
+  user-select:none; 
+  pointer-events:none; 
+  will-change: transform, opacity; 
+}

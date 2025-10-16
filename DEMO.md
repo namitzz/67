@@ -1,103 +1,173 @@
-# Demo & Usage Guide
+# 67 Meme Camera Effect - Demo & Usage Guide
 
-## Visual Walkthrough
+This guide will walk you through using the new 67 Meme Camera Effect with practical examples and tips.
 
-### Normal Mode
-When you first start the detector, you'll see:
-- Your camera feed
-- Hand landmark detection (skeleton drawn on your hands)
-- Finger count for each detected hand
-- Status message: "Ready to detect 6-7..."
+## 📸 Screenshot
 
-### Meme Mode Activated! 🔥
-When you show 6 or 7 fingers and hold for a moment:
-- The screen floods with "6 7" text in various:
-  - Sizes (small to very large)
-  - Colors (bright, random colors)
-  - Positions (scattered across the screen)
-- A large pulsating message appears in the center: "🔥 6 7 DETECTED! 🔥"
-- The text variations include:
-  - "6 7"
-  - "67"
-  - "🔥 6 7 🔥"
-  - "SIX SEVEN"
-  - "6️⃣7️⃣"
-- Status message changes to: "MEME MODE!" in red
-- The meme flood continues for 5 seconds
+### Main Interface
 
-## How to Trigger
+![Main Interface](https://github.com/user-attachments/assets/c461c2bb-c0a1-41a1-9d1f-c805608bc58d)
 
-### Single Hand (showing 6 fingers)
-This is a bit tricky but possible! Try:
-- Extend all 5 fingers on one hand fully
-- The algorithm might detect it as 6 if your hand position is just right
-- Or use creative positioning
+The interface features:
+- Clean dark theme with centered camera stage (16:9 aspect ratio)
+- Fullscreen dark background
+- Control panel with Start/Stop/Fullscreen buttons
+- Customization controls: Sound toggle, Intensity slider, Cooldown slider, Party mode
+- Status message display
+- Footer with TikTok trend credit
 
-### Two Hands (easier)
-- Show 3 fingers on one hand and 3 on the other (total 6)
-- Show 3 fingers on one hand and 4 on the other (total 7)
-- Show 4 fingers on one hand and 3 on the other (total 7)
+## 🎯 Quick Start
 
-The detector looks for:
-- Any hand showing 6 or 7 individual fingers (advanced!)
-- Combinations of hands that suggest you're making a "6 7" gesture
+1. **Open the app** - Visit https://namitzz.github.io/67/
+2. **Click "Start camera"** - Allow camera access when prompted
+3. **Show 6 or 7 fingers** - Try 3+3, 3+4, or 5+2
+4. **Watch the explosion!** 💥
 
-## Tips for Best Results
+## 🎨 Visual Effects
 
-1. **Lighting**: Make sure you're in a well-lit room
-2. **Background**: Plain backgrounds work better
-3. **Distance**: Keep your hands about 1-2 feet from the camera
-4. **Steadiness**: Hold the gesture steady for about 1 second
-5. **Hand Orientation**: Face your palm toward the camera
+When you trigger (show 6 or 7 fingers):
 
-## Controls
+- 🎬 **Screen shakes** - Earthquake effect
+- 🔍 **Screen zooms** - Pulsating in/out
+- ⚡ **Flash effect** - White pulses (5 times)
+- 💥 **Text spam** - Random "67" texts across screen
+- 🔊 **Bass drop** - Synthesized sound (90Hz → 40Hz)
+- ⏱️ **Duration** - Effects last ~2.2 seconds
 
-- **'q'**: Quit the application
-- **ESC**: (alternative) Quit the application
+## 🎮 Controls
 
-## Technical Details
+### Sound Toggle
+Enable/disable the bass drop sound effect
 
-The detector uses:
-- MediaPipe's hand landmark detection (21 landmarks per hand)
-- Finger counting algorithm based on tip vs PIP joint positions
-- Temporal smoothing (10-frame history) to avoid false positives
-- 5-second meme display duration with animated effects
+### Intensity Slider (10-120)
+Controls how many meme texts appear
+- Low (10-30): Subtle effect
+- Medium (40-70): Balanced
+- High (80-120): Maximum chaos!
 
-## Customization
+### Cooldown Slider (800-4000ms)
+Time between allowed triggers
+- Short (800-1500ms): Rapid firing
+- Medium (1500-3000ms): Balanced
+- Long (3000-4000ms): Controlled
 
-You can easily modify the behavior by editing `detector.py`:
+### Party Mode
+Double the meme texts for extra effect! 🎉
 
-- **Meme duration**: Change `self.meme_duration` (line ~25)
-- **Detection sensitivity**: Adjust `min_detection_confidence` (line ~18)
-- **Number of memes**: Modify the calculation in `create_meme_overlay()` (line ~125)
-- **Meme texts**: Edit the `texts` array (line ~137)
-- **Detection threshold**: Change the sum check in detection_history (line ~213)
+### Fullscreen
+Go fullscreen for immersive experience
 
-## Troubleshooting
+## 🖐️ Hand Gestures
 
-**Problem**: Camera not opening
-- **Solution**: Make sure no other application is using your camera
+Easy ways to trigger:
 
-**Problem**: Hands not detected
-- **Solution**: Improve lighting or move closer to camera
+### Option 1: Three + Three (6 total)
+```
+Left hand:  👌 (3 fingers)
+Right hand: 👌 (3 fingers)
+Total: 6 = TRIGGER! 🔥
+```
 
-**Problem**: False triggers
-- **Solution**: Increase the detection threshold in the code
+### Option 2: Three + Four (7 total)
+```
+Left hand:  👌 (3 fingers)
+Right hand: ✋ (4 fingers)
+Total: 7 = TRIGGER! 🔥
+```
 
-**Problem**: No triggers even with correct gesture
-- **Solution**: Lower the detection confidence or hold gesture longer
+### Option 3: Five + Two (7 total)
+```
+Left hand:  ✋ (5 fingers)
+Right hand: ✌️ (2 fingers)
+Total: 7 = TRIGGER! 🔥
+```
 
-## Examples of What Works
+## 💡 Pro Tips
 
-✅ **Detected:**
-- 5 fingers extended fully (sometimes detected as 6)
-- Two hands showing 3+3, 3+4, 4+3 fingers
-- Clear, well-lit hand gestures
+✅ **For Best Results:**
+- Use good lighting
+- Keep hands 1-2 feet from camera
+- Face palms toward camera
+- Hold gesture steady for ~1 second
 
-❌ **Not Detected:**
-- Fingers too close together
-- Hand too far from camera
-- Poor lighting
-- Blurry/fast motion
+❌ **Avoid:**
+- Very dim lighting
+- Moving hands too quickly
+- Blocking hands with objects
+- Getting too close (cuts off frame)
 
-Enjoy the meme flood! 🔥
+## 🛠️ Troubleshooting
+
+### Camera Not Starting
+- Check browser permissions
+- Ensure HTTPS or localhost
+- Close other apps using camera
+
+### Gesture Not Detected
+- Improve lighting
+- Hold hands steadier
+- Try different finger combinations
+- Check MediaPipe loaded (no console errors)
+
+### Performance Issues
+- Lower intensity slider
+- Close other browser tabs
+- Try different browser (Chrome recommended)
+
+## 📱 Mobile Support
+
+Works on:
+- ✅ iOS Safari
+- ✅ Chrome Android
+- ✅ Samsung Internet
+
+Tips for mobile:
+- Use front camera
+- Prop phone against something
+- Ensure good lighting
+
+## 🎬 Use Cases
+
+### TikTok/Instagram Content
+Record screen while triggering effect on beat
+
+### Party Entertainment
+Connect to TV, let guests trigger effects
+
+### Virtual Meetings
+Fun icebreaker for remote teams
+
+## 🔧 How It Works
+
+**Detection:**
+- MediaPipe Hands detects up to 2 hands
+- Counts extended fingers (tip above joint)
+- Requires 5/10 frames to match (smoothing)
+- Cooldown prevents spam
+
+**Effects:**
+- CSS animations (shake, zoom, flash)
+- JavaScript spawns random text elements
+- Web Audio API synthesizes bass sound
+- Auto-cleanup after 2.2 seconds
+
+## 🌟 Technical Details
+
+- **Frame rate**: 30-60 FPS
+- **Detection latency**: ~50-100ms
+- **Trigger delay**: ~300-500ms
+- **Effect duration**: 2200ms
+- **Browser**: Chrome/Edge recommended
+
+## 🎉 Share Your Creations
+
+Tag with:
+- #67Meme
+- #67MemeCamera
+- #TikTokTrend
+
+---
+
+**Have fun creating viral content!** 🔥💯
+
+For more info, see [README.md](README.md) or [FAQ.md](FAQ.md)

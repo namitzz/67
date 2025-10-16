@@ -1,213 +1,187 @@
-# 67 Meme Detector 🔥
+# 67 Meme Camera Effect 🔥
 
-A real-time gesture detector that uses your camera to detect the "6 7" gesture (finger counting) and floods the screen with "6 7" memes when detected!
+A viral TikTok/Instagram-style meme camera that triggers an intense visual explosion when you show 6 or 7 fingers! Built with MediaPipe Hands for real-time gesture detection.
 
-![Python](https://img.shields.io/badge/Python-3.7%2B-blue)
-![OpenCV](https://img.shields.io/badge/OpenCV-4.8%2B-green)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow)
 ![MediaPipe](https://img.shields.io/badge/MediaPipe-0.10%2B-orange)
+![HTML5](https://img.shields.io/badge/HTML5-Camera-red)
 
-## 🎯 Features
+## ✨ Features
 
-- 🎥 **Real-time camera-based hand gesture detection**
-- 👆 **Counts fingers on both hands simultaneously** using advanced ML
-- 🔥 **Triggers meme flood** when 6 or 7 fingers are detected
-- 💫 **Animated meme overlay** with random positions, sizes, and colors
-- 🎨 **Pulsating effects** for maximum meme impact
-- ⚡ **Smooth detection** with temporal filtering to avoid false triggers
+- 🎥 **Real-time webcam hand detection** using MediaPipe Hands
+- 👆 **Smart finger counting** across both hands (detects 6 or 7 total fingers)
+- 💥 **Intense meme effects**:
+  - Screen shakes and zooms
+  - Flash effects
+  - Random "67" text spam across screen
+  - Bold white/yellow font with random sizes
+- 🔊 **Bass drop sound** using Web Audio API (no external files needed!)
+- ⚙️ **Customizable controls**:
+  - Sound toggle
+  - Intensity slider (10-120 meme texts)
+  - Cooldown slider (0.8-4 seconds)
+  - Party mode for extra effects
+- 🎮 **Smooth user experience**:
+  - Graceful camera permission handling
+  - Cooldown system prevents spam
+  - Fullscreen mode support
+  - Works on desktop and mobile browsers
 
 ## 🚀 Quick Start
 
-### 🌐 Try it Online (Web Version)
+### 🌐 Try it Online
 
-**[Launch Web App](https://namitzz.github.io/67/)** - No installation needed! Works in your browser.
+**[Launch Web App](https://namitzz.github.io/67/)** - No installation needed!
 
-The web version uses JavaScript and MediaPipe Web to run entirely in your browser. Just click the link, allow camera access, and start detecting!
+Just open the link, allow camera access, and start making memes! 🎉
 
-### 💻 Desktop Version (Python)
+### 💻 Run Locally
 
-#### Linux/macOS
 ```bash
 git clone https://github.com/namitzz/67.git
 cd 67
-pip install -r requirements.txt
-python3 detector.py
+# Simply open index.html in your browser
+# Or use a local server:
+python -m http.server 8000
+# Then visit http://localhost:8000
 ```
 
-Or use the quick start script:
-```bash
-./start.sh
-```
+## 📖 How to Use
 
-### Windows
-```bash
-git clone https://github.com/namitzz/67.git
-cd 67
-pip install -r requirements.txt
-python detector.py
-```
+1. Click **"Start camera"** button
+2. Allow camera access when prompted
+3. Show **6 or 7 fingers** to the camera (try 3+3, 3+4, 5+2)
+4. Hold the gesture steady for ~1 second
+5. Watch the **MEME EXPLOSION** happen! 💥🔥
+6. Adjust intensity, cooldown, and toggle party mode for different effects
 
-Or double-click `start.bat`
+### Pro Tips
 
-## 📋 Requirements
-
-- Python 3.7 or higher
-- Webcam/camera
-- Dependencies (auto-installed from requirements.txt):
-  - OpenCV (opencv-python)
-  - MediaPipe
-  - NumPy
-  - Pillow
-
-## 📖 Documentation
-
-- **[DEMO.md](DEMO.md)** - Visual walkthrough and usage tips
-- **[FAQ.md](FAQ.md)** - Frequently asked questions and troubleshooting
-- **[test_detector.py](test_detector.py)** - Test installation and setup
-
-## 🎮 How to Use
-
-1. Run the detector: `python3 detector.py`
-2. Position yourself in front of the camera
-3. Show 6 or 7 fingers to trigger the meme flood
-4. Watch the screen flood with "6 7" memes! 🎉
-5. Press 'q' to quit
-
-### Gesture Examples
-
-**Easy ways to trigger:**
-- 👋 + 👋 Two hands: 3 + 3 fingers = 6 detected
-- 👋 + ✋ Two hands: 3 + 4 fingers = 7 detected  
-- ✋ + ✋ Two hands: 5 + 2 fingers = 7 detected
-
-### Tips for Best Results
-
-- ✅ Good lighting
-- ✅ Plain background
-- ✅ Hold hands 1-2 feet from camera
-- ✅ Keep gesture steady for ~1 second
+- ✅ Good lighting helps detection
 - ✅ Face palms toward camera
-
-## 🔧 How It Works
-
-The detector uses:
-- **OpenCV** for camera capture and image processing
-- **MediaPipe Hands** for accurate hand landmark detection (21 points per hand)
-- **Finger counting algorithm** that analyzes finger tip vs joint positions
-- **Temporal smoothing** (10-frame history buffer) for reliable detection
-- **Dynamic meme generation** with randomized text properties
-
-When 6 or 7 fingers are detected consistently across multiple frames, "meme mode" activates and floods your screen with animated "6 7" text for 5 seconds! 🎉
+- ✅ Keep hands 1-2 feet from camera
+- ✅ Hold gesture steady for reliable triggers
+- ✅ Use party mode for maximum chaos! 🎉
 
 ## 🎨 Customization
 
-### Easy Customization (Recommended)
+All controls are built into the UI:
 
-Edit `config.py` to customize without touching the main code:
+- **Sound Toggle**: Enable/disable bass drop sound
+- **Intensity Slider**: Control number of meme texts (10-120)
+- **Cooldown Slider**: Time between triggers (0.8-4 seconds)
+- **Party Mode**: Double the meme texts for extra effect!
+- **Fullscreen Button**: Go fullscreen for maximum immersion
 
-```python
-# Detection sensitivity
-MIN_DETECTION_CONFIDENCE = 0.7  # Lower = easier detection
+## 🛠️ Technical Details
 
-# Trigger threshold
-DETECTION_THRESHOLD = 5  # Frames needed to activate
+### Built With
 
-# Meme display
-MEME_DURATION = 5.0  # Seconds
-MAX_MEMES = 50  # Maximum meme texts
+- **MediaPipe Hands** (Vision Tasks v0.10.10) - Hand landmark detection
+- **Web Audio API** - Synthesized bass drop sound
+- **Canvas API** - Video feed rendering
+- **ResizeObserver** - Responsive canvas sizing
+- **Vanilla JavaScript** - No frameworks needed!
 
-# Custom meme texts
-MEME_TEXTS = [
-    "6 7",
-    "67",
-    "YOUR CUSTOM TEXT HERE"
-]
-```
+### How It Works
 
-### Advanced Customization
+1. **Hand Detection**: MediaPipe detects up to 2 hands with 21 landmarks each
+2. **Finger Counting**: Algorithm checks if finger tips are above joints (y-axis) and thumb laterally positioned
+3. **Trigger Smoothing**: Requires 5/10 frames to match to avoid false triggers
+4. **Cooldown System**: Prevents rapid re-triggering using configurable cooldown
+5. **Effect System**:
+   - CSS animations for shake/zoom/flash
+   - JavaScript for spawning random text elements
+   - Web Audio for synthesized bass sound
+   - Automatic cleanup after ~2 seconds
 
-For more control, edit `detector.py` directly:
+### Browser Compatibility
 
-```python
-# Finger counting algorithm (count_fingers method)
-# Detection logic (detect_six_seven method)  
-# Meme animation (create_meme_overlay method)
-```
-
-## 🛠️ Troubleshooting
-
-**Camera not opening?**
-- Ensure no other app is using the camera
-- Check camera permissions in OS settings
-
-**Hands not detected?**
-- Improve lighting
-- Move closer to camera
-- Use plain background
-
-**Can't install dependencies?**
-```bash
-pip install --default-timeout=300 -r requirements.txt
-```
-
-For more help, see **[FAQ.md](FAQ.md)**
-
-## 🧪 Testing
-
-Run the test suite to verify installation:
-```bash
-python3 test_detector.py
-```
-
-This will:
-- ✓ Check all dependencies are installed
-- ✓ Verify detector class can be instantiated  
-- ✓ Test core methods without requiring a camera
+✅ Chrome/Edge (recommended)
+✅ Firefox
+✅ Safari (iOS/macOS)
+⚠️ Requires HTTPS or localhost for camera access
 
 ## 📦 Project Structure
 
 ```
 67/
-├── index.html          # Web version (GitHub Pages)
-├── detector.py         # Desktop application (Python)
-├── config.py          # Configuration file (easy customization!)
-├── banner.py          # ASCII art banner
-├── requirements.txt    # Python dependencies
-├── test_detector.py    # Test suite
-├── start.sh           # Quick start (Linux/macOS)
-├── start.bat          # Quick start (Windows)
+├── index.html          # Main HTML structure
+├── style.css          # All styling and animations
+├── script.js          # Hand detection and effects logic
+├── assets/            # Directory for assets
 ├── README.md          # This file
-├── DEMO.md            # Visual walkthrough
-├── FAQ.md             # FAQs and troubleshooting
-├── .gitignore         # Git ignore rules
-└── .github/
-    └── workflows/
-        └── pages.yml  # GitHub Pages deployment
+└── Python files...    # Legacy Python desktop version
 ```
+
+## 🎯 Advanced Features
+
+### Detection Algorithm
+
+The finger counting uses a sophisticated heuristic:
+- **4 fingers** (index-pinky): Checks if tip Y < pip Y
+- **Thumb**: Checks lateral distance from wrist (>0.04 normalized)
+- **Both hands**: Combines counts across all detected hands
+- **Smoothing**: 10-frame rolling buffer prevents jitter
+
+### Audio Synthesis
+
+The bass drop is synthesized in real-time:
+```javascript
+// Frequency: 90Hz → 40Hz (exponential)
+// Gain: 0.0001 → 0.8 → 0.0001
+// Duration: 0.3 seconds
+```
+No external audio files needed!
+
+## 🚧 Troubleshooting
+
+**Camera not working?**
+- Ensure you're on HTTPS or localhost
+- Check browser camera permissions
+- Close other apps using the camera
+
+**Hands not detected?**
+- Improve lighting
+- Move hands closer (but not too close)
+- Ensure palms face camera
+- Try different hand positions
+
+**Performance issues?**
+- Lower the intensity slider
+- Close other browser tabs
+- Try a simpler background
 
 ## 🌐 Deployment
 
-### GitHub Pages (Web Version)
+The app automatically deploys to GitHub Pages via `.github/workflows/pages.yml`:
 
-The web version is automatically deployed to GitHub Pages when changes are pushed to the main branch. It uses:
-- **MediaPipe Hands Web** for hand detection in the browser
-- **JavaScript** for real-time processing
-- **Browser Camera API** (getUserMedia) for camera access
+```yaml
+# Serves index.html, style.css, script.js
+# Updates on push to main branch
+# Available at: https://namitzz.github.io/67/
+```
 
-Access it at: **https://namitzz.github.io/67/**
+## 🎬 Python Desktop Version
 
-### Desktop Version
+A Python/OpenCV desktop version is also available in this repo:
 
-For the full Python experience with more customization options, clone the repository and run locally as described in the Quick Start section.
+```bash
+pip install -r requirements.txt
+python detector.py
+```
+
+Features offline usage and additional customization options.
 
 ## 🤝 Contributing
 
-Contributions welcome! Ideas:
-- Add more meme variations
-- Improve detection accuracy
-- Create gesture combinations
-- Add sound effects
-- Build a GUI
-- Mobile support
+Ideas for contributions:
+- 📹 Add MediaRecorder for video recording/download
+- 📤 Add share button for social media
+- 🎨 Add custom overlay upload
+- 🎵 Add custom sound upload
+- 🌈 Add more animation effects
+- 📱 Improve mobile performance
 
 ## 📝 License
 
@@ -216,10 +190,13 @@ Open source - feel free to use and modify!
 ## 🎉 Credits
 
 Built with:
-- [OpenCV](https://opencv.org/) - Computer vision library
 - [MediaPipe](https://mediapipe.dev/) - Google's ML framework
-- Love for memes! 🔥
+- Web Audio API - For synthesized sounds
+- Inspired by viral TikTok/Instagram "67" trend
+- Made with ❤️ for the meme community
 
 ---
 
-**Made with ❤️ for the 6 7 meme community**
+**#67Meme — Inspired by TikTok trend** 🔥💯
+
+**[Try it now!](https://namitzz.github.io/67/)**
