@@ -157,3 +157,43 @@ button:disabled {
   pointer-events:none; 
   will-change: transform, opacity; 
 }
+
+/* Diagnostics footer */
+.diagnostics {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: var(--muted);
+  font-size: 11px;
+  font-family: monospace;
+  text-align: center;
+  z-index: 1000;
+}
+
+.diagnostics span {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Mobile responsiveness improvements */
+@media (max-width: 640px) {
+  .controls {
+    flex-direction: column;
+  }
+  
+  .row {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .spacer {
+    display: none;
+  }
+  
+  label {
+    font-size: 14px;
+  }
+}
