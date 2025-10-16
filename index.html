@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>67 Meme Generator</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.10/vision_bundle.js"></script>
+  <!-- Load MediaPipe bundle with defer to prevent race conditions -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.10/vision_bundle.js" defer crossorigin="anonymous"></script>
 </head>
 <body>
   <header>67 Meme Generator <span class="badge">Show 6 or 7 fingers</span></header>
   <main>
     <div class="stage" id="stage">
-      <video id="video" playsinline></video>
+      <!-- playsinline prevents fullscreen on iOS, muted+autoplay help on mobile -->
+      <video id="video" playsinline muted autoplay></video>
       <canvas id="canvas"></canvas>
       <div class="overlay" id="overlay"></div>
       <div class="flash" id="flash"></div>
@@ -35,10 +37,16 @@
     <p class="msg" id="msg">Ready.</p>
   </main>
 
+  <!-- Diagnostics footer for debugging -->
+  <div class="diagnostics" id="diagnostics">
+    model:<span id="diagModel">—</span> | fps:<span id="diagFps">—</span> | last:<span id="diagLast">—</span> | err:<span id="diagErr">—</span>
+  </div>
+
   <footer style="text-align: center; padding: 20px; color: var(--muted); font-size: 0.9em;">
     <a href="#67Meme" style="color: var(--text); text-decoration: none;">#67Meme — Inspired by TikTok trend</a>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- Load script.js with defer to ensure DOM is ready -->
+  <script src="script.js" defer></script>
 </body>
 </html>
